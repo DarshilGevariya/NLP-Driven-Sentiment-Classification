@@ -1,41 +1,37 @@
-<p align="center">
-<img width=600 height=360 style="background-color:White;" alt="salient features" src="salient_features.png">
-</p>
+⚙️ How It Works
 
-We briefly explain the salient features of our approach here. In [#Approach](#approach), we explain each task in detail.  
+1️⃣ Data Collection  
+Tweets were scraped based on smartphone-related keywords and brand names, resulting in a dataset of **12k+ tweets**.
 
-#### 1) Simpler and faster models for binary classification
+2️⃣ Preprocessing  
+Text normalization steps included:
+- Lowercasing, cleaning, stopword removal  
+- Emoji decoding → `"🔥"` → `"fire"`  
+- Hindi phrase translation via Google Translate API  
+- Detecting brand mentions using regex patterns
 
-- Binary classification for mobile-theme identification is not a very difficult task.
-- The amount of data being processed in this step is about 4 times that being processed in the other steps. This is because the ratio of mobile-themed to non-mobile themed data is about 1:3, and we only need to do the other tasks on mobile-themed data. 
-- Therefore it makes sense to use simpler and faster models for this step.
+3️⃣ Classical ML (TF-IDF + XGBoost)  
+- Converted cleaned text into TF-IDF vectors  
+- Trained an XGBoost classifier on manually labeled sentiment data  
+- Evaluated accuracy, F1-score, and confusion matrix
 
-#### 2) Translation of all data to english for headline generation and sentiment analysis
+4️⃣ BERT Fine-Tuning  
+- Loaded pre-trained BERT  
+- Fine-tuned on an external sentiment dataset (e.g., Tweets/Reviews dataset)  
+- Used the fine-tuned model to predict sentiment on the cleaned smartphone tweets
 
-- Headline generation is a difficult task, which yielded poor results on multilingual data.
-- Translating all data to English language using an accurate model not only provides greater scope for scalability to additional languages, it even improves performance on other tasks for which we may already have superior pretrained models in English.
+5️⃣ Insights  
+- Compared sentiment distribution across **9 major smartphone brands**  
+- Observed differences between XGBoost predictions and BERT predictions  
+- Highlighted brand strengths and weaknesses based on public opinion
 
-#### 3) Regex matching for brand identification
+🏁 Conclusion
 
-- The set of all possible mobile brands is a modestly-sized set
-- Using regex matching instead of framing it as an NER problem is much faster and often more reliable.
+This project demonstrates how combining **traditional ML** with **state-of-the-art transformers** can yield strong performance on sentiment classification tasks.  
+It also highlights the importance of high-quality preprocessing (emoji decoding, translation, regex extraction) in achieving meaningful insights from noisy social media data.
 
-#### 4) Using advanced models like T5 for headline generation
+---
 
-- We tried a lot of possible variants but T5 performed the best.
+## 📧 Contact
 
-### Complete Pipeline
-
-<img src="flowchart.png" style="background-color:White;" alt="workflow">
-<br>
-<br>
-
-### Approach
-
-<p align="center">
-<img width=900 height=500 src="binary_classification.png" style="background-color:White;" alt="workflow">
-<img width=900 height=500 src="brand_identification.png"  style="background-color:White;" alt="workflow">
-<img width=900 height=500 src="sentiment_analysis.png"    style="background-color:White;" alt="workflow">
-<img width=900 height=500 src="headline_generation.png"   style="background-color:White;" alt="workflow">
-</p>
-
+If you'd like to discuss the project, improve the models, or collaborate on NLP/ML work, feel free to reach out!
